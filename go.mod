@@ -1,4 +1,4 @@
-module github.com/everoute/analyzer/shared/numeric
+module github.com/everoute/numeric-go
 
 go 1.20
 
