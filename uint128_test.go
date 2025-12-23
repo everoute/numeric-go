@@ -3,7 +3,7 @@ package numeric_test
 import (
 	"testing"
 
-	"github.com/everoute/analyzer/shared/numeric"
+	numeric "github.com/everoute/numeric-go"
 	. "github.com/onsi/gomega"
 )
 
