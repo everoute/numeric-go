@@ -1,4 +1,4 @@
-.PHONY: image-generate generate docker-generate test docker-test publish
+.PHONY: image-generate generate docker-generate test docker-test
 
 image-generate:
 	docker build -f build/image/generate/Dockerfile -t localhost/generate ./build/image/generate/
@@ -10,11 +10,13 @@ docker-generate: image-generate
 	$(eval WORKDIR := /go/src/github.com/everoute/template-repo)
 	docker run --rm -iu 0:0 -w $(WORKDIR) -v $(CURDIR):$(WORKDIR) localhost/generate make generate
 
-test:
-	go test ./... --race --coverprofile coverage.out
-
 docker-test:
 	$(eval WORKDIR := /go/src/github.com/everoute/template-repo)
 	docker run --rm -iu 0:0 -w $(WORKDIR) -v $(CURDIR):$(WORKDIR) golang:1.19 make test
 
-publish:
+test:
+	go test ./... --race -p 1 --coverprofile coverage.out '-gcflags=all=-N -l'
+
+.PHONY: go-mod-tidy
+go-mod-tidy:
+	go mod tidy
